@@ -53,10 +53,17 @@ async function getAuthResult(user) {
         email: user.email,
         username: user.username,
     }
-    console.log('pre token')
     const token = jwt.sign(payload, SECRET)
-    console.log('after token')
-    console.log(token)
-
+    console.log('waiting token...')
     return [payload, token]
+}
+
+exports.findUser = async (userId) => {
+    const user = await User.find(userId)
+
+    if(user){
+        return getAuthResult(user)
+    }else{
+        throw new Error('invalid user')
+    }
 }

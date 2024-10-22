@@ -9,13 +9,14 @@
 
 <style scoped>
 h1 {
+    padding-top: 200px;
     text-align: center;
     margin: auto;
 }
 
-.background{
+.background{    
     width: 100%;
     height: 100%;
-    background-image: url(../assets/FuturisticHome.jpg);
+    /* background-image: url(../assets/FuturisticHome.jpg); */
 }
 </style>

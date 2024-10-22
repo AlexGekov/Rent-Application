@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken")
 const sign = (payload, secret, options) => {
     const promise = new Promise((resolve, reject) => {
         jwt.sign(payload, secret.SECRET, options, (err, result) => {
-            console.log(err)
             if(err){
                 return reject(result)
             }

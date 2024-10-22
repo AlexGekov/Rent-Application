@@ -1,24 +1,13 @@
 // import {ref, type Ref} from 'vue'
-
+import { User } from "../types/user";
 import { formUserData } from "../types/user";
 import internalFetch from "../lib/InternalFetch";
 import { userErrObj } from "../types/errors";
+import { ref, type Ref } from "vue";
 
-
-export async function register(userData: formUserData, confpassword: string) {
-    try {
-        const resp: Response = await internalFetch("POST", 'users/register', { ...userData, confpassword })
-        const data = await resp.json()
-
-        if (resp.status === 400) {
-            throw data.message
-        }
-
-    } catch (err) {
-        throw err
-    }
-
-}
+export const isLoggedIn: Ref<boolean> = ref(false)
+export const userId: Ref<string> = ref('')
+export const username: Ref<string> = ref('')
 
 export function validateData({ email, password, username }: formUserData, confpassword: string) {
     const EmailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -53,4 +42,37 @@ export function validateData({ email, password, username }: formUserData, confpa
     }
     
     return errObj
+}
+
+
+export async function register(userData: formUserData, confpassword: string) {
+    try {
+        const resp: Response = await internalFetch("POST", 'users/register', { ...userData, confpassword })
+        const data = await resp.json()
+        isLoggedIn.value = true
+        userId.value = data.userId
+        username.value = data.username
+
+        if (resp.status === 400) {
+            throw data.message
+        }
+
+    } catch (err) {
+        throw err
+    }
+
+}
+
+export async function getUser() {
+    try{
+        const resp: Response = await internalFetch('GET', 'users/getUser')
+        const data: User = await resp.json()
+        isLoggedIn.value = true
+        userId.value = data.userId
+        username.value = data.username
+        return data
+    }catch(err){
+        console.log(err)
+    }
+    
 }

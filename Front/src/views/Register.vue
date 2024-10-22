@@ -3,7 +3,7 @@ import { ref, type Ref } from 'vue';
 import { formUserData } from '../types/user';
 import { userErrObj } from '../types/errors';
 import * as userService from "../services/userService"
-// import router from '../router';
+import router from '../router';
 
 const email: Ref<string> = ref('')
 const password: Ref<string> = ref('')
@@ -23,9 +23,9 @@ async function register() {
     if(!errors.value.email && !errors.value.username && !errors.value.password){
         try{
             await userService.register(userData, confpassword.value)
-            // router.push("/catalog")
+            router.push("/catalog")
         }catch(err){
-            // errors.value.generalError = String(err)
+            errors.value.generalError = String(err)
         }
     }
 

@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import router from '../router';
+import * as userService from '../services/userService';
+import { onMounted } from 'vue';
 
-function goToCatalog(e:Event){
-  e.preventDefault()
-  router.push("/catalog")
-}
+onMounted(() => {
+    if(document.cookie.includes('userId=')) {
+      userService.getUser()
+    }
+})
 </script>
 
 <template>
   <header class="header">
     <router-link to="/catalog"><img src="../assets/House.png" alt="#"></router-link>
     <nav class="nav">
-      <router-link to="/login">Login</router-link>
-      <router-link to="/register">Register</router-link>
+      <template v-if="!userService.isLoggedIn.value">
+        <router-link to="/login">Login</router-link>
+        <router-link to="/register">Register</router-link>
+      </template>
+      <template v-if="userService.isLoggedIn.value">
+        <a>Hello {{userService.username}}</a>
+        <router-link to="/logout">Logout</router-link>
+      </template>
     </nav>
   </header>
 </template>
