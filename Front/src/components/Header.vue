@@ -9,7 +9,7 @@ function goToCatalog(e:Event){
 
 <template>
   <header class="header">
-    <a class="logo" href="/catalog">#<img @click="goToCatalog"></a>
+    <router-link to="/catalog"><img src="../assets/House.png" alt="#"></router-link>
     <nav class="nav">
       <router-link to="/login">Login</router-link>
       <router-link to="/register">Register</router-link>
@@ -19,7 +19,7 @@ function goToCatalog(e:Event){
 
 <style scoped>
 .header {
-  padding: 40px 100px;
+  padding: 30px 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -32,7 +32,7 @@ function goToCatalog(e:Event){
 }
 
 .nav a{
-  color: #FFF;
+  color: #000;
   justify-content: space-between;
   text-decoration: none;
   transition: 0.3s ease;   
@@ -41,5 +41,16 @@ function goToCatalog(e:Event){
 .nav a:hover {
   transform: scale(1.2);
   text-shadow: 0px 0px 10px black;
+}
+
+img {
+  transition: 0.3s ease;   
+  height: 60px;
+  width: 60px;
+}
+
+img:hover{
+  height: 70px;
+  width: 70px;
 }
 </style>
