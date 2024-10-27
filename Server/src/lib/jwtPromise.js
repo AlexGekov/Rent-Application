@@ -6,7 +6,6 @@ const sign = (payload, secret, options) => {
             if(err){
                 return reject(result)
             }
-            console.log('pre resolve')
             return resolve
         })
     })

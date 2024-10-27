@@ -49,16 +49,17 @@ exports.register = async (userData, confpassword) => {
 
 exports.login = async (userData) => {
     try{
-        const user = await User.find(userData.email)
+        const user = await User.find({email: userData.email})
+        console.log(user)
 
         if (user) {
-            const isValid = bcrypt.compare(userData.password, user.password)
+            const isValid = bcrypt.compare(userData.password, user[0].password)
             
-            if (isValid){
+            if (!isValid){
                 throw new Error("Email or password do not match")
             }
-
-            return getAuthResult(user)
+            
+            return getAuthResult(user[0])
         }
 
     }catch(err){
@@ -73,13 +74,11 @@ async function getAuthResult(user) {
         username: user.username,
     }
     const token = jwt.sign(payload, SECRET)
-    console.log('waiting token...')
     return [payload, token]
 }
 
 exports.findUser = async (userId) => {
     const user = await User.find(userId)
-
     if(user){
         return getAuthResult(user)
     }else{

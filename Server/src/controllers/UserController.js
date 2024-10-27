@@ -12,7 +12,6 @@ router.post('/register', async (req, res) => {
     const confpassword = req.body.confpassword
 
     try {
-        console.log('trying')
         const [user, authToken] = await userManager.register(userData, confpassword)
         res.cookie('authToken', authToken)
         res.cookie('userId', user._id)
@@ -52,7 +51,6 @@ router.post('/login', async (req, res) => {
         username: req.body.username,
         password: req.body.password
     }
-    console.log('pre userManager')
     try{
         const [user, token] = await userManager.login(userData)
         res.cookie('authToken', token)
@@ -68,6 +66,12 @@ router.post('/login', async (req, res) => {
             message: err.message
         })
     }
+})
+
+router.post('/logout', async (req, res)=> {
+    res.clearCookie("userId")
+    res.clearCookie("authTokem")
+    res.end()
 })
 
 module.exports = router

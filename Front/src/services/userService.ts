@@ -67,6 +67,7 @@ export async function getUser() {
     try{
         const resp: Response = await internalFetch('GET', 'users/getUser')
         const data: User = await resp.json()
+        console.log(data)
         isLoggedIn.value = true
         userId.value = data.userId
         username.value = data.username
@@ -78,11 +79,9 @@ export async function getUser() {
 
 export async function login(userData: formUserData){
     try{
-        console.log("in userServ")
         const response: Response = await internalFetch("POST", "users/login", userData)
         const data = await response.json()
         console.log(data)
-        console.log("Data");
         
 
         if(response.status === 400){
@@ -95,4 +94,11 @@ export async function login(userData: formUserData){
     }catch(err){
         throw err
     }
+}
+
+export function logoutUser() {
+    isLoggedIn.value = false
+    userId.value = ''
+
+    return internalFetch('POST', 'users/logout', undefined)
 }

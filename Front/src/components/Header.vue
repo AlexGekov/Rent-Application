@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '../router';
 import * as userService from '../services/userService';
 import { onMounted } from 'vue';
 
@@ -7,6 +8,12 @@ onMounted(() => {
       userService.getUser()
     }
 })
+
+function logout(e: Event){
+  e.preventDefault()
+  userService.logoutUser()
+  router.push("/")
+}
 </script>
 
 <template>
@@ -18,8 +25,8 @@ onMounted(() => {
         <router-link to="/register">Register</router-link>
       </template>
       <template v-if="userService.isLoggedIn.value">
-        <a>Hello {{userService.username}}</a>
-        <router-link to="/logout">Logout</router-link>
+        <a>Hello, {{userService.username}}</a>
+        <router-link to="" @click="logout($event)" >Logout</router-link>
       </template>
     </nav>
   </header>
