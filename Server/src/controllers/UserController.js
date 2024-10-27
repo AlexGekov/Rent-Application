@@ -2,7 +2,7 @@ const router = require("express").Router()
 
 const userManager = require('../managers/UserManager')
 
-router.post('/register', async(req, res) => {
+router.post('/register', async (req, res) => {
     const userData = {
         email: req.body.email,
         username: req.body.username,
@@ -11,18 +11,17 @@ router.post('/register', async(req, res) => {
 
     const confpassword = req.body.confpassword
 
-    try{
+    try {
         console.log('trying')
         const [user, authToken] = await userManager.register(userData, confpassword)
         res.cookie('authToken', authToken)
         res.cookie('userId', user._id)
-        res.cookie('username', user.username)
         res.json({
             email: user.email,
             username: user.username,
             userId: user._id
         })
-    }catch(err){
+    } catch (err) {
         res.status(400).json({
             message: err.message
         })
@@ -31,16 +30,39 @@ router.post('/register', async(req, res) => {
 
 router.get('/getUser', async (req, res) => {
     const userId = req.cookies?.userId
-    try{
+    try {
         const [user, authToken] = await userManager.findUser(userId)
         res.cookie('authToken', authToken)
         res.cookie('userId', user._id)
-        res.cookie('username', user.username)
         res.json({
             email: user.email,
             username: user.username,
             userId: user._id
         })
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+})
+
+router.post('/login', async (req, res) => {
+    const userData = {
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    }
+    console.log('pre userManager')
+    try{
+        const [user, token] = await userManager.login(userData)
+        res.cookie('authToken', token)
+        res.cookie('userId', user._id)
+        res.json({
+            email: user.email,
+            username: user.username,
+            userId: user._id,
+        })
+
     }catch(err){
         res.status(400).json({
             message: err.message

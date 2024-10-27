@@ -9,7 +9,7 @@ export const isLoggedIn: Ref<boolean> = ref(false)
 export const userId: Ref<string> = ref('')
 export const username: Ref<string> = ref('')
 
-export function validateData({ email, password, username }: formUserData, confpassword: string) {
+export function validateData({ email, password, username }: formUserData, confpassword?: string) {
     const EmailReg: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     const emailLength = 5
     const usernameLength = 4
@@ -74,5 +74,25 @@ export async function getUser() {
     }catch(err){
         console.log(err)
     }
-    
+}
+
+export async function login(userData: formUserData){
+    try{
+        console.log("in userServ")
+        const response: Response = await internalFetch("POST", "users/login", userData)
+        const data = await response.json()
+        console.log(data)
+        console.log("Data");
+        
+
+        if(response.status === 400){
+            throw data.message
+        }
+
+        isLoggedIn.value = true
+        userId.value = data.userId
+        username.value = data.username
+    }catch(err){
+        throw err
+    }
 }

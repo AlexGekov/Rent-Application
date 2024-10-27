@@ -47,6 +47,25 @@ exports.register = async (userData, confpassword) => {
     }
 }
 
+exports.login = async (userData) => {
+    try{
+        const user = await User.find(userData.email)
+
+        if (user) {
+            const isValid = bcrypt.compare(userData.password, user.password)
+            
+            if (isValid){
+                throw new Error("Email or password do not match")
+            }
+
+            return getAuthResult(user)
+        }
+
+    }catch(err){
+        throw new Error('Email, username or password do not match!')
+    }
+}
+
 async function getAuthResult(user) {
     const payload = {
         _id: user._id,

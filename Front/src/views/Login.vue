@@ -1,34 +1,109 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
+import { formUserData } from '../types/user';
+// import { userErrObj } from '../types/errors';
+import * as userService from '../services/userService'
+import router from '../router';
 
 const email: Ref<string> = ref('')
 const password: Ref<string> = ref('')
 const username: Ref<string> = ref('')
+// const errors: Ref<userErrObj> = ref({})
+
+async function login() {
+    const userData: formUserData = {
+        email: email.value,
+        password: password.value,
+        username: username.value
+    }
+
+    await userService.login(userData)
+    router.push('/catalog')
+}
+
 </script>
 
 <template>
-    <form class="form" >
-        <h2>Register</h2>
+    <div class="box">
+        <section class="registerPage" @submit.prevent="login">
+        <form class="form" >
+        <h2>Login</h2>
         <div class="input-box">
-            <input type="email" name="email" placeholder="" id="email" v-model="email">
-            <span>email</span>
+            <input type="email" name="email" placeholder="Email" id="email" v-model="email">
         </div>
         <div class="input-box">
-            <input type="username" name="username" placeholder="" id="username" v-model="username">
-            <span>username</span>
-        </div>
-        <div class="input-box">
-            <input type="passsword" name="passsword" placeholder="" id="password" v-model="password">
-            <span>passsword</span>
+            <input type="passsword" name="passsword" placeholder="Password" id="password" v-model="password">
         </div>
 
-        <button class="formBtn">Register</button>
+        <div class="btn-box">
+            <button class="formBtn">Login</button>
+        </div>
 
         <div class="switch-link">
-            <p>Already have an account? <router-link to="/register">Register</router-link></p>
+            <router-link style="text-decoration: none; color: inherit;" to="/login">Don't have an account?</router-link>
         </div>
     </form>
+    </section>
+    </div>
 </template>
 
-<style>
+<style scoped>
+    .box {
+        margin-top: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        justify-self: center;
+        height: 20em;
+        width: 25em;
+        background-color: grey;
+        border-color: white;
+        border-radius: 7px;
+        text-align: center;
+    }
+
+    input{
+        border-radius: 5px;
+        background: none;
+        border-color: #fff;
+        color: #fff;
+    }
+
+    .input-box {
+        padding-bottom: 5px;
+    }
+
+    ::placeholder {
+        text-align: center;
+        color:#fff
+    }
+
+    input:focus {
+        color: #fff;
+    }
+
+    .btn-box {
+        padding-top: 10px;
+    }
+
+    .formBtn {
+        height: 40px;
+        width: 80px;
+        background-color: #fff;
+        color: grey;
+        border-radius: 10px;
+        border-color: #fff;
+        transition: 0.3s;
+    }
+
+    .formBtn:hover {
+        cursor: pointer;
+        height: 45px;
+        width: 85px;
+    }
+
+    .switch-link {
+        padding-top: 10px;
+    }
 </style>
