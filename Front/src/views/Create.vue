@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
-import { formUserData } from '../types/user';
-import { userErrObj } from '../types/errors';
+import { formAppData } from '../types/app';
+import { appErrObj } from '../types/errors';
 import * as userService from "../services/userService"
 import router from '../router';
 
+const name: Ref<string> = ref('')
 const location: Ref<string> = ref('')
 const image: Ref<string> = ref('')
-const confpassword: Ref<string> = ref('')    
-const username: Ref<string> = ref('')
-const errors = ref<userErrObj>({})
+const tenants: Ref<string> = ref('')    
+const rent: Ref<string> = ref('')
+// const errors = ref<appErrObj>({})
 
 async function create() {
  
@@ -23,21 +24,23 @@ async function create() {
         <form class="form" >
         <h2>Appartment information</h2>
         <div class="input-box">
+            <input type="text" name="name" placeholder="Name" id="name" v-model="name">
+        </div>
+        <div class="input-box">
             <input type="location" name="location" placeholder="Location" id="location" v-model="location">
         </div>
         <div class="input-box">
             <input type="text" name="image" placeholder="Image" id="image" v-model="image">
         </div>
         <div class="input-box">
-            <input type="text" name="tenant" placeholder="Tenat/s" id="tenants" v-model="confpassword">
+            <input type="text" name="tenant" placeholder="Tenat/s" id="tenants" v-model="tenants">
+        </div>
+        <div class="input-box">
+            <input type="text" name="rent" placeholder="Rent" id="rent" v-model="rent">
         </div>
 
         <div class="btn-box">
-            <button class="formBtn">Register</button>
-        </div>
-
-        <div class="switch-link">
-            <router-link style="text-decoration: none; color: inherit;" to="/login">Alredy have an account?</router-link>
+            <button class="formBtn">Create!</button>
         </div>
     </form>
     </section>

@@ -5,3 +5,11 @@ export interface userErrObj {
     confpassword?: string,
     generalError?: string
 }
+
+export interface appErrObj {
+    name: string,
+    location?: string,
+    image?: string,
+    tenants?: string,
+    rent?: string,
+}
