@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Catalog from '../views/Catalog.vue'
+import Create from '../views/Create.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
         path: '/catalog',
         name: 'Catalog',
         component: Catalog,
+      },
+      {
+        path: '/create',
+        name: 'Create',
+        component: Create
       }
     ]
 })

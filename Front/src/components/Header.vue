@@ -26,6 +26,7 @@ function logout(e: Event){
       </template>
       <template v-if="userService.isLoggedIn.value">
         <a>Hello, {{userService.username}}</a>
+        <router-link to="create">Add an appartment</router-link>
         <router-link to="" @click="logout($event)" >Logout</router-link>
       </template>
     </nav>
