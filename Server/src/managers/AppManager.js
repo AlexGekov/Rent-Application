@@ -1,34 +1,46 @@
 const User = require('../models/user')
 
-// exports.GetFromUser = async (userId) =>{
-//     const user = await User.find(userId)
-//     const apartments = user.apartments
-// }
-
 exports.Find = (Id) => apartment.findById(Id).lean()
 
-exports.create = async (Data) => {
-    const kindLength = 4
-    const nameLength = 3
-    const descriptionLength = 10
+exports.create = async (appData, userId) => {
+    console.log("in create!")
+    const user = await User.find(userId)
+    const nameLength = 5
+    const locationLength = 6
 
-    if (Data.kind.length <= kindLength) {
-        throw new Error(`Kind should be at least ${kindLength} characters long`)
-    }
-    if (Data.name.length <= nameLength) {
-        throw new Error(`Name should be at least ${nameLength} characters long`)
-    }
-    if (Data.year <= 1930 && Data.year >= 2024) {
-        throw new Error(`Year is from 1930 until the current year!`)
-    }
-    if (Data.description.length < descriptionLength) {
-        throw new Error(`Description should be at least ${descriptionLength} characters long`)
-    }
-    if (!Data.image.startsWith("https://") && !Data.image.startsWith("http://")) {
-        throw new Error(`Image should start with "https://" or "http://"`)
+    if (!appData.name) {
+        throw new Error("Name is required!")
+    } else if (appData.name.length < nameLength) {
+        throw new Error("Name is too short!")
     }
 
-    await apartment.create(Data)
+    if (!appData.location) {
+        throw new Error("Location is required!")
+    } else if (appData.location.length < locationLength) {
+        throw new Error("Enter a real location!")
+    }
+
+    if (!appData.image) {
+        throw new Error("An image is required!")
+    } else if (!appData.image.includes(".jpg") && !appData.image.includes(".png")) {
+        throw new Error("Jpg/png image is required")
+    }
+
+    if (!appData.tenants) {
+        throw new Error("Tenants are required!")
+    }
+
+    if(!appData.rent){
+        throw new Error("Rent is required")
+    }
+
+    if(!appData.sign_date){
+        throw new Error("Sign date is required")
+    }
+
+    const apartment = appData
+    console.log(user.apartments)
+    // return user.apartments.push(apartment)
 }
 
 exports.search = async (Param) => {

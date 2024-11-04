@@ -3,12 +3,6 @@ import router from '../router';
 import * as userService from '../services/userService';
 import { onMounted } from 'vue';
 
-onMounted(() => {
-    if(document.cookie.includes('userId=')) {
-      userService.getUser()
-    }
-})
-
 function logout(e: Event){
   e.preventDefault()
   userService.logoutUser()
