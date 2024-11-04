@@ -1,8 +1,11 @@
-const post = require("../models/appartment")
+const User = require('../models/user')
 
-exports.GetAll = () => post.find().lean()
+// exports.GetFromUser = async (userId) =>{
+//     const user = await User.find(userId)
+//     const apartments = user.apartments
+// }
 
-exports.Find = (Id) => post.findById(Id).lean()
+exports.Find = (Id) => apartment.findById(Id).lean()
 
 exports.create = async (Data) => {
     const kindLength = 4
@@ -25,36 +28,15 @@ exports.create = async (Data) => {
         throw new Error(`Image should start with "https://" or "http://"`)
     }
 
-    await post.create(Data)
+    await apartment.create(Data)
 }
 
 exports.search = async (Param) => {
-    let result = await post.find().lean()
+    let result = await apartment.find().lean()
     result = result.filter(post => post.name.toLowerCase().includes(Param.toLowerCase()))
     return result
 }
 
-exports.Delete = (Id) => post.findByIdAndDelete(Id)
+exports.Delete = (Id) => apartment.findByIdAndDelete(Id)
 
-exports.Edit = (Id, Data) => post.findByIdAndUpdate(Id, Data)
-
-exports.Watch = async (Id, ownerId) => {
-    const curPost = await post.findById(Id)
-    console.log(curPost)
-    console.log(ownerId)
-    curPost.Watch.push(ownerId)
-    return curPost.save()
-}
-
-exports.FindAllPostsByUser = async (userId) => {
-    let result = await post.find().lean()
-    result = result.filter(post => post.owner == userId)
-    return result
-}
-
-exports.SearchPostsByUser = async (search, userId) => {
-    let result = await post.find().lean()
-    result = result.filter(post => post.owner == userId)
-    result = result.filter(post => post.name.toLowerCase().includes(search.toLowerCase()))
-    return result
-}
+exports.Edit = (Id, Data) => apartment.findByIdAndUpdate(Id, Data)

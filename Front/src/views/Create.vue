@@ -4,7 +4,6 @@ import { formAppData } from '../types/app';
 import { appErrObj } from '../types/errors';
 import * as appServive from "../services/appServive"
 import router from '../router';
-import { RefSymbol } from '@vue/reactivity';
 
 const name: Ref<string> = ref('')
 const location: Ref<string> = ref('')
@@ -26,9 +25,13 @@ async function create() {
 
     errors.value = appServive.validateData(appData)
 
-    if(!errors.value){
-        await appServive.create(appData)
-        router.push("catalog")
+    if(!errors.value.name && !errors.value.location && !errors.value.sign_date && !errors.value.image){
+        try{
+            await appServive.create(appData)
+            router.push("/catalog")
+        }catch(err){
+            // errors.value = String(err)
+        }
     }
 }
 
