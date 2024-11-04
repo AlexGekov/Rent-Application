@@ -42,7 +42,7 @@ async function create() {
     <div class="box">
         <section class="registerPage" @submit.prevent="create">
         <form class="form" >
-        <h2>Appartment information</h2>
+        <h2>Apartment information</h2>
         <div class="input-box">
             <input type="text" name="name" placeholder="Name" id="name" v-model="name">
         </div>
