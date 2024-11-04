@@ -2,18 +2,34 @@
 import { ref, type Ref } from 'vue';
 import { formAppData } from '../types/app';
 import { appErrObj } from '../types/errors';
-import * as userService from "../services/userService"
+import * as appServive from "../services/appServive"
 import router from '../router';
+import { RefSymbol } from '@vue/reactivity';
 
 const name: Ref<string> = ref('')
 const location: Ref<string> = ref('')
 const image: Ref<string> = ref('')
 const tenants: Ref<string> = ref('')    
 const rent: Ref<string> = ref('')
-// const errors = ref<appErrObj>({})
+const sign_date: Ref<string> = ref('')
+const errors = ref<appErrObj>({})
 
 async function create() {
- 
+    const appData: formAppData = {
+        name: name.value,
+        location: location.value,
+        image: image.value,
+        tenants: tenants.value,
+        rent: rent.value,
+        sign_date: sign_date.value
+    }
+
+    errors.value = appServive.validateData(appData)
+
+    if(!errors.value){
+        await appServive.create(appData)
+        router.push("catalog")
+    }
 }
 
 </script>
@@ -37,6 +53,9 @@ async function create() {
         </div>
         <div class="input-box">
             <input type="text" name="rent" placeholder="Rent" id="rent" v-model="rent">
+        </div>
+        <div class="input-box">
+            <input type="text" name="sign_date" placeholder="Sign date" id="sign_date" v-model="sign_date">
         </div>
 
         <div class="btn-box">

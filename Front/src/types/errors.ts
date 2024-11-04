@@ -7,9 +7,10 @@ export interface userErrObj {
 }
 
 export interface appErrObj {
-    name: string,
+    name?: string,
     location?: string,
     image?: string,
     tenants?: string,
     rent?: string,
+    sign_date?: string,
 }
