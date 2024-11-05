@@ -1,3 +1,5 @@
+import apartment from './appartment'
+
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
@@ -15,9 +17,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    apartments: {
-        type: Array
-    }
+    apartments: [
+        {
+            type: apartment
+        }
+    ]
 })
 
 const User = mongoose.model("User", userSchema)
