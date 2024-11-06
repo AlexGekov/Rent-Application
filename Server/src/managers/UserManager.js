@@ -86,8 +86,10 @@ exports.findUser = async (userId) => {
 }
 
 exports.findApartments = async (userId) => {
+    console.log(userId)
     const user = await User.findById(userId)
-    let apartments = user[0].apartments
+    console.log(user)
+    let apartments = user.apartments
     console.log(apartments)
     return apartments
 }

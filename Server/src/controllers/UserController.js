@@ -57,9 +57,9 @@ router.post('/logout', async (req, res)=> {
 })
 
 router.get("/apartments", async (req, res) => {
-    let userId = req.body.userId
+    let userId = req
     try{
-        let apartments = userManager.findApartments(userId)
+        let apartments = await userManager.findApartments(userId)
         res.json(apartments)
     }catch(err){
         res.status(400).json({

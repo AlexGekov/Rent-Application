@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, ref, type Ref } from 'vue';
+import * as userService from "../services/userService"
+const apartments = ref([])
+
+onMounted(async () => {
+  try {
+    console.log("onMounted activated!");
+    let resp = await userService.getApartments();
+    apartments.value = await resp.json();
+    console.log(apartments.value);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+</script>
 
 <template>
     <div class="frame">

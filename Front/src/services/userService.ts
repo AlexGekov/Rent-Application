@@ -77,7 +77,7 @@ export async function getUser() {
 
 export async function getApartments() {
     try {
-        const resp: Response = await internalFetch("GET", "users/apartments", { userId })
+        const resp: Response = await internalFetch("GET", "users/apartments", userId.value )
         const apartments = await resp.json()
         return apartments
     } catch (err) {
