@@ -36,10 +36,10 @@ export function validateData({ email, password, username }: formUserData, confpa
         errObj.password = `Password should be at least ${passwordLength} characters long!`
     } else if (!confpassword) {
         errObj.confpassword = "Confirmation password is required!"
-    } else if (password != confpassword){
+    } else if (password != confpassword) {
         errObj.password = "Passwords do not match!"
     }
-    
+
     return errObj
 }
 
@@ -63,31 +63,41 @@ export async function register(userData: formUserData, confpassword: string) {
 }
 
 export async function getUser() {
-    try{
+    try {
         const resp: Response = await internalFetch('GET', 'users/getUser')
         const data: User = await resp.json()
         isLoggedIn.value = true
         userId.value = data.userId
         username.value = data.username
         return data
-    }catch(err){
+    } catch (err) {
         console.log(err)
     }
 }
 
-export async function login(userData: formUserData){
-    try{
+export async function getApartments() {
+    try {
+        const resp: Response = await internalFetch("GET", "users/apartments", { userId })
+        const apartments = await resp.json()
+        return apartments
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export async function login(userData: formUserData) {
+    try {
         const response: Response = await internalFetch("POST", "users/login", userData)
         const data = await response.json()
 
-        if(response.status === 400){
+        if (response.status === 400) {
             throw data.message
         }
 
         isLoggedIn.value = true
         userId.value = data.userId
         username.value = data.username
-    }catch(err){
+    } catch (err) {
         throw err
     }
 }

@@ -50,7 +50,6 @@ exports.register = async (userData, confpassword) => {
 exports.login = async (userData) => {
     try{
         const user = await User.find({email: userData.email})
-        console.log(user)
 
         if (user) {
             const isValid = bcrypt.compare(userData.password, user[0].password)
@@ -84,4 +83,11 @@ exports.findUser = async (userId) => {
     }else{
         throw new Error('invalid user')
     }
+}
+
+exports.findApartments = async (userId) => {
+    const user = await User.findById(userId)
+    let apartments = user[0].apartments
+    console.log(apartments)
+    return apartments
 }

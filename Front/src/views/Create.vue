@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, type Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 import { formAppData } from '../types/app';
 import { appErrObj } from '../types/errors';
 import * as appServive from "../services/appServive"
 import * as userService from "../services/userService"
+import internalFetch from '../lib/InternalFetch';
 import router from '../router';
 
 const name: Ref<string> = ref('')
@@ -13,6 +14,18 @@ const tenants: Ref<string> = ref('')
 const rent: Ref<string> = ref('')
 const sign_date: Ref<string> = ref('')
 const errors = ref<appErrObj>({})
+const apartments = ref([])
+
+onMounted(async () => {
+  try {
+    console.log("onMounted activated!");
+    let resp = await userService.getApartments();
+    apartments.value = await resp.json();
+    console.log(apartments.value);
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 async function create() {
     const appData: formAppData = {
