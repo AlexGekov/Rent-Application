@@ -5,7 +5,6 @@ exports.Find = (Id) => apartment.findById(Id).lean()
 exports.create = async (appData, userId) => {
     console.log("in create!")
     const user = await User.findById(userId)
-    console.log(user)
     const nameLength = 5
     const locationLength = 6
 
@@ -40,8 +39,10 @@ exports.create = async (appData, userId) => {
     }
 
     const apartment = appData
+    console.log(apartment)
     console.log(user.apartments)
     user.apartments.push(apartment)
+    user.save()
     return
 }
 

@@ -1,5 +1,3 @@
-import apartment from './appartment'
-
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
@@ -19,7 +17,35 @@ const userSchema = new mongoose.Schema({
     },
     apartments: [
         {
-            type: apartment
+            name: {
+                type: String,
+                required: true
+            },
+
+            location: {
+                type: String,
+                required: true
+            },
+
+            image: {
+                type: String,
+                required: true
+            },
+
+            tenants: {
+                type: String,
+                required: true
+            },
+
+            rent: {
+                type: String,
+                required: true
+            },
+
+            sign_date: {
+                type: String,
+                required: true
+            }
         }
     ]
 })
