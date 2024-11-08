@@ -26,7 +26,7 @@ onMounted(async () => {
         </template>
     </div>
 
-    <div class="empty">
+    <div v-else="apartment" class="empty">
         <h1>Add apartments!</h1>
     </div>
 </template>
