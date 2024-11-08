@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { onRenderTracked, ref, type Ref } from 'vue';
+import { User } from '../types/user';
 import router from '../router';
 import * as userService from '../services/userService';
 import { onMounted } from 'vue';
+let user: Ref<User | undefined> = ref()
+
+onMounted( async () => {
+  user.value = await userService.getUser()
+})
 
 function logout(e: Event){
   e.preventDefault()

@@ -66,6 +66,11 @@ export async function getUser() {
     try {
         const resp: Response = await internalFetch('GET', 'users/getUser')
         const data: User = await resp.json()
+
+        if (resp.status === 400) {
+            throw data
+        }
+
         isLoggedIn.value = true
         userId.value = data.userId
         username.value = data.username

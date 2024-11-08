@@ -77,7 +77,7 @@ async function getAuthResult(user) {
 }
 
 exports.findUser = async (userId) => {
-    const user = await User.find(userId)
+    const user = await User.findById(userId)
     if(user){
         return getAuthResult(user)
     }else{

@@ -3,6 +3,7 @@ export interface User {
     email: string,
     password: string,
     userId: string,
+    apartments: Array<Object>,
     // role: String
 };
 

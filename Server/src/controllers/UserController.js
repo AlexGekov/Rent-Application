@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
         username: req.body.username,
         password: req.body.password
     }
-    try{
+    try {
         const [user, token] = await userManager.login(userData)
         res.cookie('authToken', token)
         res.cookie('userId', user._id)
@@ -43,6 +43,18 @@ router.post('/login', async (req, res) => {
             userId: user._id,
         })
 
+    } catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
+})
+
+router.get("/getUser", async(req, res) => {
+    let userId = req.cookies.userId
+    try{
+        let user = await userManager.findUser(userId)
+        res.json(user)
     }catch(err){
         res.status(400).json({
             message: err.message
@@ -50,7 +62,7 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/logout', async (req, res)=> {
+router.post('/logout', async (req, res) => {
     res.clearCookie("userId")
     res.clearCookie("authTokem")
     res.end()
@@ -58,11 +70,10 @@ router.post('/logout', async (req, res)=> {
 
 router.get("/apartments", async (req, res) => {
     let userId = req.cookies.userId
-    console.log(userId)
-    try{
+    try {
         let apartments = await userManager.findApartments(userId)
         res.json(apartments)
-    }catch(err){
+    } catch (err) {
         res.status(400).json({
             message: err.message
         })
