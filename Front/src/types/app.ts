@@ -1,9 +1,10 @@
-export interface Appartment {
+export interface Apartment {
     name: string
     location: string,
     image: string,
     tenants: string,
     rent: string,
+    _id: string
 };
 
 export interface formAppData {

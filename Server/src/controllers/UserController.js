@@ -57,7 +57,8 @@ router.post('/logout', async (req, res)=> {
 })
 
 router.get("/apartments", async (req, res) => {
-    let userId = req
+    let userId = req.cookies.userId
+    console.log(userId)
     try{
         let apartments = await userManager.findApartments(userId)
         res.json(apartments)

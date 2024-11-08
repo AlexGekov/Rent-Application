@@ -1,5 +1,7 @@
 const express = require('express')
+const cookieParser = require("cookie-parser")
 const routes = require('./routes.js')
+
 // const {auth} = require("./middlewares/authenticate.js")
 
 const app = express()
@@ -16,6 +18,7 @@ dbConnect()
 expressConfig(app)
 setCORS(app)
 
+app.use(cookieParser())
 app.use(routes)
 // app.use(auth)
 

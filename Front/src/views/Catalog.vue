@@ -1,14 +1,13 @@
 <script setup lang="ts">
+import { Apartment } from '../types/app';
 import { onMounted, ref, type Ref } from 'vue';
 import * as userService from "../services/userService"
-const apartments = ref([])
+const apartments: Ref<Apartment[] | undefined> = ref()
 
 onMounted(async () => {
   try {
     console.log("onMounted activated!");
-    let resp = await userService.getApartments();
-    apartments.value = await resp.json();
-    console.log(apartments.value);
+    apartments.value = await userService.getApartments();
   } catch (err) {
     console.log(err);
   }
@@ -17,42 +16,18 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="frame">
+    <div v-if="apartments" class="frame">
+        <template v-for="apartment in apartments">
         <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
+            <img :src="apartment.image"/>
+            <p>{{ apartment.name }}</p>
+            <button >Details</button>
         </div>
+        </template>
+    </div>
 
-        <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
-        </div>
-
-        <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
-        </div>
-
-        <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
-        </div>
-
-        <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
-        </div>
-        
-        <div class="ap-box">
-            <img src="../assets/download.jpg">
-            <p>App_Name</p>
-            <button>Details</button>
-        </div>
+    <div class="empty">
+        <h1>Add apartments!</h1>
     </div>
 </template>
 
@@ -77,6 +52,12 @@ onMounted(async () => {
         border-radius: 5px;
         box-shadow: 5px 5px #666;
         margin: 60px;
+    }
+
+    .empty{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     img{
