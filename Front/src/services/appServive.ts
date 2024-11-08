@@ -47,5 +47,12 @@ export async function create(appData: formAppData, userId: string){
     }catch(err){
         console.log(err)
     }
+}
 
+export async function getApp(apId: string){
+    try{
+        let resp: Response = await internalFetch("GET", `apartments/${apId}`)
+    }catch(err){
+
+    }
 }

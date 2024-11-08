@@ -45,7 +45,12 @@ const userSchema = new mongoose.Schema({
             sign_date: {
                 type: String,
                 required: true
-            }
+            },
+
+            owner: {
+                type: String,
+                required: true
+            },
         }
     ]
 })
