@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Catalog from '../views/Catalog.vue'
 import Create from '../views/Create.vue'
+import Details from '../views/Details.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
         path: '/create',
         name: 'Create',
         component: Create
+      },
+      {
+        path: '/:id',
+        name: 'Details',
+        component: Details
       }
     ]
 })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onRenderTracked, ref, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import { User } from '../types/user';
 import router from '../router';
 import * as userService from '../services/userService';

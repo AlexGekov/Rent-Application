@@ -42,8 +42,8 @@ export function validateData({ name, location, image, tenants, rent, sign_date }
 
 export async function create(appData: formAppData, userId: string){
     try{
-        const resp: Response = await internalFetch("POST", "apartments/create", {...appData, userId})
-        return
+        let resp: Response = await internalFetch("POST", "apartments/create", {...appData, userId})
+        return resp
     }catch(err){
         console.log(err)
     }

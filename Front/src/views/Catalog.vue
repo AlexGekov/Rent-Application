@@ -6,7 +6,6 @@ const apartments: Ref<Apartment[] | undefined> = ref()
 
 onMounted(async () => {
   try {
-    console.log("onMounted activated!");
     apartments.value = await userService.getApartments();
   } catch (err) {
     console.log(err);
@@ -21,7 +20,7 @@ onMounted(async () => {
         <div class="ap-box">
             <img :src="apartment.image"/>
             <p>{{ apartment.name }}</p>
-            <button >Details</button>
+            <router-link :to="{name: 'Details', params:{id: apartment._id}}"><button >Details</button></router-link>
         </div>
         </template>
     </div>
