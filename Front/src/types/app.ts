@@ -4,6 +4,7 @@ export interface Apartment {
     image: string,
     tenants: string,
     rent: string,
+    owner: string,
     _id: string
 };
 

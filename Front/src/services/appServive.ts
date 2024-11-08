@@ -50,9 +50,6 @@ export async function create(appData: formAppData, userId: string){
 }
 
 export async function getApp(apId: string){
-    try{
-        let resp: Response = await internalFetch("GET", `apartments/${apId}`)
-    }catch(err){
-
-    }
+    let resp: Response = await internalFetch("GET", `apartments/${apId}`)
+    return resp.json()
 }

@@ -3,10 +3,15 @@ import { Apartment } from '../types/app';
 import { onMounted, ref, type Ref } from 'vue';
 import * as userService from "../services/userService"
 const apartments: Ref<Apartment[] | undefined> = ref()
+let isEmpty: Ref<boolean> = ref(false)
 
 onMounted(async () => {
   try {
     apartments.value = await userService.getApartments();
+    if (apartments.value == undefined){
+        isEmpty.value = true
+    }
+    console.log(apartments)
   } catch (err) {
     console.log(err);
   }
@@ -15,7 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="apartments" class="frame">
+    <div v-if="isEmpty" class="frame">
         <template v-for="apartment in apartments">
         <div class="ap-box">
             <img :src="apartment.image"/>
@@ -25,7 +30,7 @@ onMounted(async () => {
         </template>
     </div>
 
-    <div v-else="apartment" class="empty">
+    <div v-if="!isEmpty" class="empty">
         <h1>Add apartments!</h1>
     </div>
 </template>

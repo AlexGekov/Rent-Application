@@ -76,7 +76,7 @@ export async function getUser() {
         username.value = data.username
         return data
     } catch (err) {
-        console.log(err)
+        throw err
     }
 }
 
@@ -84,9 +84,14 @@ export async function getApartments() {
     try {
         const resp: Response = await internalFetch("GET", "users/apartments", userId.value )
         const apartments = await resp.json()
+
+        if (resp.status === 400) {
+            throw apartments
+        }
+
         return apartments
     } catch (err) {
-        console.log(err)
+        throw err
     }
 }
 
