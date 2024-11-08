@@ -39,6 +39,7 @@ exports.create = async (appData, userId) => {
     }
 
     const apartment = appData
+    apartment.owner = userId
     console.log(apartment)
     console.log(user.apartments)
     user.apartments.push(apartment)

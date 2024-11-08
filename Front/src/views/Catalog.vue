@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div v-if="isEmpty" class="frame">
+    <div v-if="!isEmpty" class="frame">
         <template v-for="apartment in apartments">
         <div class="ap-box">
             <img :src="apartment.image"/>
@@ -30,7 +30,7 @@ onMounted(async () => {
         </template>
     </div>
 
-    <div v-if="!isEmpty" class="empty">
+    <div v-if="isEmpty" class="empty">
         <h1>Add apartments!</h1>
     </div>
 </template>
