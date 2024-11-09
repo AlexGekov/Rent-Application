@@ -1,6 +1,10 @@
 const User = require('../models/user')
 
-exports.Find = (Id) => apartment.findById(Id).lean()
+exports.Find = async(userId, appId) => {
+    let user = await User.findById(userId)
+    let apartment = user.apartments.find( app => app._id == appId)
+    return apartment
+}
 
 exports.create = async (appData, userId) => {
     console.log("in create!")

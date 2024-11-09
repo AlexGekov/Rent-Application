@@ -2,7 +2,6 @@ const router = require("express").Router()
 const AppManager = require("../managers/AppManager")
 
 router.post("/create", async(req, res) => {
-    const cookies = req.headers.cookie
     const userId = req.body.userId
     const appData = {
         name: req.body.name,
@@ -14,19 +13,20 @@ router.post("/create", async(req, res) => {
     }
     try{
         await AppManager.create(appData, userId)
-
     }catch(err){
         res.status(400)
     }
 })
 
-// router.get("/catalog", async(req, res) => {
-//     try{
-//         let posts = await AppManager.GetFromUser()
-//         res.json(posts).end()
-//     }catch(err){
-//         res.status(404)
-//     }
-// })
+router.get("/:id", async (req, res) => {
+    let userId = req.cookies.userId
+    let apId = req.params.id
+    try{
+        let apartment = await AppManager.Find(userId, apId)
+        res.json(apartment)
+    }catch(err){
+        res.status(400)
+    }
+})
 
 module.exports = router

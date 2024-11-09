@@ -10,7 +10,8 @@ const apId: string = String(route.params.id)
 const apartment: Ref<Apartment | undefined> = ref()
 
 onMounted( async () => {
-    // apartment.value = await appService.getApp(apId)
+    apartment.value = await appService.getApp(apId)
+    console.log(apartment)
 })
 </script>
 
