@@ -26,9 +26,8 @@ exports.create = async (appData, userId) => {
 
     if (!appData.image) {
         throw new Error("An image is required!")
-    } else if (!appData.image.includes(".jpg") && !appData.image.includes(".png")) {
-        throw new Error("Jpg/png image is required")
     }
+      
 
     if (!appData.tenants) {
         throw new Error("Tenants are required!")

@@ -21,8 +21,6 @@ export function validateData({ name, location, image, tenants, rent, sign_date }
 
     if (!image) {
         errObj.image = "An image is required!"
-    } else if (!image.includes(".jpg") && !image.includes(".png")) {
-        errObj.image = "Jpg/png image is required"
     }
 
     if (!tenants) {
