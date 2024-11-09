@@ -26,9 +26,9 @@ onMounted(async () => {
                 <p>Tenants: {{ apartment?.tenants }}</p>
             </div>
             <div class="right">
-                <p>El</p>
-                <p>Heating</p>
-                <p>Water</p>
+                <p>El:</p>
+                <p>Heating:</p>
+                <p>Water:</p>
             </div>
         </div>
     </div>
