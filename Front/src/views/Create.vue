@@ -3,7 +3,6 @@ import { ref, type Ref } from 'vue';
 import { formAppData } from '../types/app';
 import { appErrObj } from '../types/errors';
 import * as appServive from "../services/appServive"
-import * as userService from "../services/userService"
 import router from '../router';
 
 const name: Ref<string> = ref('')
@@ -28,7 +27,7 @@ async function create() {
 
     if(!errors.value.name && !errors.value.location && !errors.value.sign_date && !errors.value.image){
         try{
-            await appServive.create(appData, userService.userId.value)
+            await appServive.create(appData)
             router.push('/catalog')
         }catch(err){
             // errors.value = String(err)

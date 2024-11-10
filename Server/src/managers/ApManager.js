@@ -8,8 +8,6 @@ exports.Find = async(userId, apId) => {
 }
 
 exports.create = async (apData, userId) => {
-    console.log("in create!")
-    const user = await User.findById(userId)
     const nameLength = 5
     const locationLength = 6
 
@@ -44,8 +42,8 @@ exports.create = async (apData, userId) => {
 
     const apartment = apData
     apartment.owner = userId
-    user.apartments.push(apartment)
-    user.save()
+    console.log(apartment)
+    await Apartment.create(apartment)
     return
 }
 

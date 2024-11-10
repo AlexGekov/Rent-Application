@@ -38,9 +38,9 @@ export function validateData({ name, location, image, tenants, rent, sign_date }
     return errObj
 }
 
-export async function create(appData: formAppData, userId: string){
+export async function create(appData: formAppData){
     try{
-        let resp: Response = await internalFetch("POST", "apartments/create", {...appData, userId})
+        let resp: Response = await internalFetch("POST", "apartments/create", {...appData})
         return resp
     }catch(err){
         console.log(err)
@@ -55,6 +55,7 @@ export async function getApp(apId: string){
 export async function Delete(apId: string) {
     try{
         let resp: Response = await internalFetch("DELETE", `apartments/${apId}`)
+        return resp
     }catch(err){
         console.log(err)
     }
