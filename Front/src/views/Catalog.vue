@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Apartment } from '../types/app';
 import { onMounted, ref, type Ref } from 'vue';
-import * as userService from "../services/userService"
+import * as appService from "../services/appServive"
 const apartments: Ref<Apartment[] | undefined> = ref()
 let isEmpty: Ref<boolean> = ref(false)
 
 onMounted(async () => {
     try {
-        apartments.value = await userService.getApartments();
+        apartments.value = await appService.getApartments();
         if (apartments.value == undefined) {
             isEmpty.value = true
         }

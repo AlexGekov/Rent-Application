@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const ApManager = require("../managers/ApManager")
 
-router.post("/create", async(req, res) => {
+router.post("/create", async (req, res) => {
     const userId = req.cookies.userId
     const appData = {
         name: req.body.name,
@@ -11,8 +11,19 @@ router.post("/create", async(req, res) => {
         rent: req.body.rent,
         sign_date: req.body.sign_date
     }
-    try{
+    try {
         await ApManager.create(appData, userId)
+    } catch (err) {
+        res.status(400)
+    }
+})
+
+router.get("/owned", async (req, res) => {
+    let userId = req.cookies.userId
+    try{
+        let apartments = await ApManager.FindApartments(userId)
+        console.log(apartments)
+        res.json(apartments)
     }catch(err){
         res.status(400)
     }
@@ -21,15 +32,15 @@ router.post("/create", async(req, res) => {
 router.get("/:id", async (req, res) => {
     let userId = req.cookies.userId
     let apId = req.params.id
-    try{
+    try {
         let apartment = await ApManager.Find(userId, apId)
         res.json(apartment)
-    }catch(err){
+    } catch (err) {
         res.status(400)
     }
 })
 
-router.delete("/:id", async(req ,res) => {
+router.delete("/:id", async (req, res) => {
     let userId = req.cookies.userId
     let apId = req.params.id
     await ApManager.Delete(userId, apId)

@@ -80,21 +80,6 @@ export async function getUser() {
     }
 }
 
-export async function getApartments() {
-    try {
-        const resp: Response = await internalFetch("GET", "users/apartments", userId.value )
-        const apartments = await resp.json()
-
-        if (resp.status === 400) {
-            throw apartments
-        }
-
-        return apartments
-    } catch (err) {
-        throw err
-    }
-}
-
 export async function login(userData: formUserData) {
     try {
         const response: Response = await internalFetch("POST", "users/login", userData)

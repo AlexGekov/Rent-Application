@@ -47,6 +47,21 @@ export async function create(appData: formAppData){
     }
 }
 
+export async function getApartments() {
+    try {
+        const resp: Response = await internalFetch("GET", "apartments/owned")
+        const apartments = await resp.json()
+
+        if (resp.status === 400) {
+            throw apartments
+        }
+
+        return apartments
+    } catch (err) {
+        throw err
+    }
+}
+
 export async function getApp(apId: string){
     let resp: Response = await internalFetch("GET", `apartments/${apId}`)
     return resp.json()

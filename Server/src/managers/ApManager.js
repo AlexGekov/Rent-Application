@@ -47,8 +47,13 @@ exports.create = async (apData, userId) => {
     return
 }
 
+exports.FindApartments = async (userId) => {
+    let apartments = await Apartment.find({owner: userId})
+    return apartments
+}
+
 exports.search = async (Param) => {
-    let result = await apartment.find().lean()
+    let result = await Apartment.find().lean()
     result = result.filter(post => post.name.toLowerCase().includes(Param.toLowerCase()))
     return result
 }
@@ -61,4 +66,4 @@ exports.Delete = async (userId, apId) => {
     return
 }
 
-exports.Edit = (Id, Data) => apartment.findByIdAndUpdate(Id, Data)
+exports.Edit = (Id, Data) => Apartment.findByIdAndUpdate(Id, Data)
