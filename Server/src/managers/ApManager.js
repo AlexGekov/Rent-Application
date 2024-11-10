@@ -59,7 +59,7 @@ exports.search = async (Param) => {
 exports.Delete = async (userId, apId) => {
     let apartment = await Apartment.findById(apId)
     if(apartment.owner == userId){
-        Apartment.findByIdAndDelete(apId)
+        await Apartment.findByIdAndDelete(apId)
     }
     return
 }
