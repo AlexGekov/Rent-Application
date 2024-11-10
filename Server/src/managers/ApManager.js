@@ -1,9 +1,8 @@
 const Apartment = require('../models/apartment')
 const User = require('../models/user')
 
-exports.Find = async(userId, apId) => {
-    let user = await User.findById(userId)
-    let apartment = user.apartments.find( app => app._id == apId)
+exports.Find = async(apId) => {
+    let apartment = Apartment.findById(apId)
     return apartment
 }
 
@@ -48,8 +47,7 @@ exports.create = async (apData, userId) => {
 }
 
 exports.FindApartments = async (userId) => {
-    let apartments = await Apartment.find({owner: userId})
-    return apartments
+    return await Apartment.find({owner: userId})
 }
 
 exports.search = async (Param) => {
@@ -59,7 +57,7 @@ exports.search = async (Param) => {
 }
 
 exports.Delete = async (userId, apId) => {
-    let apartment = Apartment.findById(apId)
+    let apartment = await Apartment.findById(apId)
     if(apartment.owner == userId){
         Apartment.findByIdAndDelete(apId)
     }

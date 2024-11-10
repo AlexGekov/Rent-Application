@@ -13,6 +13,7 @@ router.post("/create", async (req, res) => {
     }
     try {
         await ApManager.create(appData, userId)
+        res.end()
     } catch (err) {
         res.status(400)
     }
@@ -22,7 +23,6 @@ router.get("/owned", async (req, res) => {
     let userId = req.cookies.userId
     try{
         let apartments = await ApManager.FindApartments(userId)
-        console.log(apartments)
         res.json(apartments)
     }catch(err){
         res.status(400)
@@ -30,10 +30,10 @@ router.get("/owned", async (req, res) => {
 })
 
 router.get("/:id", async (req, res) => {
-    let userId = req.cookies.userId
     let apId = req.params.id
     try {
-        let apartment = await ApManager.Find(userId, apId)
+        let apartment = await ApManager.Find(apId)
+        console.log(apartment)
         res.json(apartment)
     } catch (err) {
         res.status(400)

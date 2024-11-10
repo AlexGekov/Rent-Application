@@ -13,17 +13,18 @@ const apartment: Ref<Apartment | undefined> = ref()
 
 onMounted(async () => {
     apartment.value = await appService.getApp(apId)
+    console.log(apartment.value)
 })
 
 async function Delete(e: Event){
     e.preventDefault()
 
     const confirm = window.confirm("Do you wish to delete this property?")
-    if(userService.isLoggedIn && apartment.value?.owner && confirm){
-        await appService.Delete(apartment.value._id)
+
+    if(userService.isLoggedIn.value && confirm){
+        await appService.Delete(apId)
         router.push("/catalog")
     }
-
 }
 </script>
 
@@ -46,7 +47,7 @@ async function Delete(e: Event){
             </div>
         </div>
         <div class="btn-box">
-            <router-link :to="{name: 'EditApartmen', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link>
+            <!-- <router-link :to="{name: 'EditApartmen', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link> -->
             <button class="button-1" @click="Delete">Delete</button>
         </div>
     </div>
