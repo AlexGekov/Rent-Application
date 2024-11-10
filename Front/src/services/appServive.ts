@@ -51,3 +51,12 @@ export async function getApp(apId: string){
     let resp: Response = await internalFetch("GET", `apartments/${apId}`)
     return resp.json()
 }
+
+export async function Delete(apId: string) {
+    try{
+        let resp: Response = await internalFetch("DELETE", `apartments/${apId}`)
+    }catch(err){
+        console.log(err)
+    }
+    
+}

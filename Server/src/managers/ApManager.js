@@ -1,50 +1,49 @@
+const Apartment = require('../models/apartment')
 const User = require('../models/user')
 
-exports.Find = async(userId, appId) => {
+exports.Find = async(userId, apId) => {
     let user = await User.findById(userId)
-    let apartment = user.apartments.find( app => app._id == appId)
+    let apartment = user.apartments.find( app => app._id == apId)
     return apartment
 }
 
-exports.create = async (appData, userId) => {
+exports.create = async (apData, userId) => {
     console.log("in create!")
     const user = await User.findById(userId)
     const nameLength = 5
     const locationLength = 6
 
-    if (!appData.name) {
+    if (!apData.name) {
         throw new Error("Name is required!")
-    } else if (appData.name.length < nameLength) {
+    } else if (apData.name.length < nameLength) {
         throw new Error("Name is too short!")
     }
 
-    if (!appData.location) {
+    if (!apData.location) {
         throw new Error("Location is required!")
-    } else if (appData.location.length < locationLength) {
+    } else if (apData.location.length < locationLength) {
         throw new Error("Enter a real location!")
     }
 
-    if (!appData.image) {
+    if (!apData.image) {
         throw new Error("An image is required!")
     }
       
 
-    if (!appData.tenants) {
+    if (!apData.tenants) {
         throw new Error("Tenants are required!")
     }
 
-    if(!appData.rent){
+    if(!apData.rent){
         throw new Error("Rent is required")
     }
 
-    if(!appData.sign_date){
+    if(!apData.sign_date){
         throw new Error("Sign date is required")
     }
 
-    const apartment = appData
+    const apartment = apData
     apartment.owner = userId
-    console.log(apartment)
-    console.log(user.apartments)
     user.apartments.push(apartment)
     user.save()
     return
@@ -56,6 +55,12 @@ exports.search = async (Param) => {
     return result
 }
 
-exports.Delete = (Id) => apartment.findByIdAndDelete(Id)
+exports.Delete = async (userId, apId) => {
+    let apartment = Apartment.findById(apId)
+    if(apartment.owner == userId){
+        Apartment.findByIdAndDelete(apId)
+    }
+    return
+}
 
 exports.Edit = (Id, Data) => apartment.findByIdAndUpdate(Id, Data)

@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const AppManager = require("../managers/AppManager")
+const ApManager = require("../managers/ApManager")
 
 router.post("/create", async(req, res) => {
     const userId = req.body.userId
@@ -12,7 +12,7 @@ router.post("/create", async(req, res) => {
         sign_date: req.body.sign_date
     }
     try{
-        await AppManager.create(appData, userId)
+        await ApManager.create(appData, userId)
     }catch(err){
         res.status(400)
     }
@@ -22,11 +22,17 @@ router.get("/:id", async (req, res) => {
     let userId = req.cookies.userId
     let apId = req.params.id
     try{
-        let apartment = await AppManager.Find(userId, apId)
+        let apartment = await ApManager.Find(userId, apId)
         res.json(apartment)
     }catch(err){
         res.status(400)
     }
+})
+
+router.delete("/:id", async(req ,res) => {
+    let userId = req.cookies.userId
+    let apId = req.params.id
+    await ApManager.Delete(userId, apId)
 })
 
 module.exports = router

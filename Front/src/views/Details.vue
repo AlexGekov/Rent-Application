@@ -4,6 +4,8 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { Apartment } from '../types/app';
 import * as appService from "../services/appServive"
+import * as userService from "../services/userService"
+import router from '../router';
 
 const route = useRoute()
 const apId: string = String(route.params.id)
@@ -12,6 +14,17 @@ const apartment: Ref<Apartment | undefined> = ref()
 onMounted(async () => {
     apartment.value = await appService.getApp(apId)
 })
+
+async function Delete(e: Event){
+    e.preventDefault()
+
+    const confirm = window.confirm("Do you wish to delete this property?")
+    if(userService.isLoggedIn && apartment.value?.owner && confirm){
+        await appService.Delete(apartment.value._id)
+        router.push("/catalog")
+    }
+
+}
 </script>
 
 <template>
@@ -33,8 +46,8 @@ onMounted(async () => {
             </div>
         </div>
         <div class="btn-box">
-            <button class="button-1">Edit</button>
-            <button class="button-1">Delete</button>
+            <router-link :to="{name: 'EditApartmen', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link>
+            <button class="button-1" @click="Delete">Delete</button>
         </div>
     </div>
 </template>
