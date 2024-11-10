@@ -29,7 +29,7 @@ async function create() {
     if(!errors.value.name && !errors.value.location && !errors.value.sign_date && !errors.value.image){
         try{
             await appServive.create(appData, userService.userId.value)
-            router.push("/catalog")
+            router.push('/catalog')
         }catch(err){
             // errors.value = String(err)
         }

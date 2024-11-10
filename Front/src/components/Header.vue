@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, type Ref } from 'vue';
-import { User } from '../types/user';
 import router from '../router';
 import * as userService from '../services/userService';
 import { onMounted } from 'vue';
-let user: Ref<User | undefined> = ref()
+const user = ref()
+const username: Ref<string> = ref('') 
 
 onMounted( async () => {
   user.value = await userService.getUser()
+  username.value = user?.value[0].username
 })
 
 function logout(e: Event){
@@ -26,7 +27,7 @@ function logout(e: Event){
         <router-link to="/register">Register</router-link>
       </template>
       <template v-if="userService.isLoggedIn.value">
-        <a>Hello, {{userService.username}}</a>
+        <a>Hello, {{username.valueOf()}}</a>
         <router-link to="create">Add an apartment</router-link>
         <router-link to="" @click="logout($event)" >Logout</router-link>
       </template>

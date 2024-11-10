@@ -15,6 +15,7 @@ router.post('/register', async (req, res) => {
         const [user, authToken] = await userManager.register(userData, confpassword)
         res.cookie('authToken', authToken)
         res.cookie('userId', user._id)
+        res.cookie('username', user.username)
         res.json({
             email: user.email,
             username: user.username,
@@ -37,6 +38,7 @@ router.post('/login', async (req, res) => {
         const [user, token] = await userManager.login(userData)
         res.cookie('authToken', token)
         res.cookie('userId', user._id)
+        res.cookie('username', user.username)
         res.json({
             email: user.email,
             username: user.username,
