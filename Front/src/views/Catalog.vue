@@ -25,7 +25,7 @@ onMounted(async () => {
             <div class="ap-box">
                 <img :src="apartment.image" />
                 <p>{{ apartment.name }}</p>
-                <router-link :to="{ name: 'Details', params: { id: apartment._id } }"><button>Details</button></router-link>
+                <router-link :to="{ name: 'Details', params: { id: apartment._id } }"><button class="button-1">Details</button></router-link>
             </div>
         </template>
     </div>
@@ -70,8 +70,51 @@ img {
     object-fit: cover;
 }
 
-button {
-    width: 80px;
-    height: 40px;
+button{
+    border-radius: 6px;
+    border-color: none;
+}
+
+.button-1 {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 40px;
+  min-width: 0;
+  outline: none;
+  padding: 10px 18px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 85px;
+  will-change: transform;
+}
+
+.button-1:disabled {
+  pointer-events: none;
+}
+
+.button-1:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-1:active {
+  box-shadow: none;
+  transform: translateY(0);
 }
 </style>
