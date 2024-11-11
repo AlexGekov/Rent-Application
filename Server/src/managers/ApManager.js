@@ -1,5 +1,4 @@
 const Apartment = require('../models/apartment')
-const User = require('../models/user')
 
 exports.Find = async(apId) => {
     let apartment = Apartment.findById(apId)

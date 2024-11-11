@@ -23,13 +23,13 @@ function logout(e: Event){
     <router-link to="/catalog"><img src="../assets/House.png" alt="#"></router-link>
     <nav class="nav">
       <template v-if="!userService.isLoggedIn.value">
-        <router-link to="/login">Login</router-link>
-        <router-link to="/register">Register</router-link>
+        <router-link class="action" to="/login">Login</router-link>
+        <router-link class="action" to="/register">Register</router-link>
       </template>
       <template v-if="userService.isLoggedIn.value">
         <a>Hello, {{username.valueOf()}}</a>
-        <router-link to="create">Add an apartment</router-link>
-        <router-link to="" @click="logout($event)" >Logout</router-link>
+        <router-link class="action" to="create">Add an apartment</router-link>
+        <router-link class="action" to="" @click="logout($event)" >Logout</router-link>
       </template>
     </nav>
   </header>
@@ -49,16 +49,15 @@ function logout(e: Event){
   gap: 2.5rem;
 }
 
-.nav a{
+.action{
   color: #000;
   justify-content: space-between;
   text-decoration: none;
   transition: 0.3s ease;   
 }
 
-.nav a:hover {
+.action:hover {
   transform: scale(1.2);
-  text-shadow: 0px 0px 10px black;
 }
 
 img {

@@ -2,6 +2,10 @@
 import { onMounted, ref, type Ref } from 'vue';
 import { useRoute } from 'vue-router';
 import * as appService from '../services/appServive'
+import { formAppData } from '../types/app';
+import { appErrObj } from '../types/errors';
+import router from '../router';
+
 
 const route = useRoute()
 const apId: string = String(route.params.id)
@@ -11,6 +15,7 @@ const image: Ref<string> = ref('')
 const tenants: Ref<string> = ref('')    
 const rent: Ref<string> = ref('')
 const sign_date: Ref<string> = ref('')
+const errors = ref<appErrObj>({})
 
 onMounted( async () => {
     const data = await appService.getApp(apId)
@@ -26,7 +31,25 @@ onMounted( async () => {
 })
 
 async function edit(){
+    const apData: formAppData = {
+        name: name.value,
+        location: location.value,
+        image: image.value,
+        tenants: tenants.value,
+        rent: rent.value,
+        sign_date: sign_date.value
+    }
+    
+    errors.value = appService.validateData(apData)
 
+    if(!errors.value.name && !errors.value.location && !errors.value.sign_date && !errors.value.image){
+        try{
+            await appService.Edit(apData, apId)
+            router.push('/catalog')
+        }catch(err){
+            // errors.value = String(err)
+        }
+    }
 }
 </script>
 

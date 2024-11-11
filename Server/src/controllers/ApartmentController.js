@@ -3,7 +3,7 @@ const ApManager = require("../managers/ApManager")
 
 router.post("/create", async (req, res) => {
     const userId = req.cookies.userId
-    const appData = {
+    const apData = {
         name: req.body.name,
         location: req.body.location,
         image: req.body.image,
@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
         sign_date: req.body.sign_date
     }
     try {
-        await ApManager.create(appData, userId)
+        await ApManager.create(apData, userId)
         res.end()
     } catch (err) {
         res.status(400)
@@ -21,10 +21,10 @@ router.post("/create", async (req, res) => {
 
 router.get("/owned", async (req, res) => {
     let userId = req.cookies.userId
-    try{
+    try {
         let apartments = await ApManager.FindApartments(userId)
         res.json(apartments)
-    }catch(err){
+    } catch (err) {
         res.status(400)
     }
 })
@@ -45,6 +45,23 @@ router.delete("/:id", async (req, res) => {
     let apId = req.params.id
     await ApManager.Delete(userId, apId)
     res.end()
+})
+
+router.put("/:id", async (req, res) => {
+    let apId = req.body.apId
+    const apData = {
+        name: req.body.name,
+        location: req.body.location,
+        image: req.body.image,
+        tenants: req.body.tenants,
+        rent: req.body.rent,
+        sign_date: req.body.sign_date
+    }
+    try{
+        await ApManager.Edit(apId, apData)
+    } catch (err) {
+        res.status(400)
+    }
 })
 
 module.exports = router
