@@ -68,7 +68,6 @@ img {
 }
 
 img:hover{
-  height: 70px;
-  width: 70px;
+  transform: scale(1.15);
 }
 </style>
