@@ -47,7 +47,7 @@ async function Delete(e: Event){
             </div>
         </div>
         <div class="btn-box">
-            <!-- <router-link :to="{name: 'EditApartmen', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link> -->
+            <router-link :to="{name: 'EditApartment', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link>
             <button class="button-1" @click="Delete">Delete</button>
         </div>
     </div>
