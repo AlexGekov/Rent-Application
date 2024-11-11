@@ -39,6 +39,7 @@ async function Delete(e: Event){
                 <p>Location: {{ apartment?.location }}</p>
                 <p>Tenants: {{ apartment?.tenants }}</p>
                 <p>Rent: {{ apartment?.rent }}€</p>
+                <p>Date of signature: {{ apartment?.sign_date }}</p>
             </div>
             <div class="right">
                 <p>El: loading...</p>

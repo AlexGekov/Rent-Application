@@ -5,7 +5,8 @@ export interface Apartment {
     tenants: string,
     rent: string,
     owner: string,
-    _id: string
+    sign_date: string,
+    _id: string,
 };
 
 export interface formAppData {
