@@ -47,7 +47,7 @@ async function edit(){
             await appService.Edit(apData, apId)
             router.push('/catalog')
         }catch(err){
-            // errors.value = String(err)
+            // errors.value = String(err)   
         }
     }
 }

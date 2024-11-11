@@ -59,6 +59,7 @@ router.put("/:id", async (req, res) => {
     }
     try{
         await ApManager.Edit(apId, apData)
+        res.end()
     } catch (err) {
         res.status(400)
     }

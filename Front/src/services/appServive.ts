@@ -39,7 +39,7 @@ export function validateData({ name, location, image, tenants, rent, sign_date }
 }
 
 export async function create(apData: formAppData){
-    return await internalFetch("POST", "apartments/create", {...apData})
+    await internalFetch("POST", "apartments/create", {...apData})
 }
 
 export async function getApartments() {
@@ -63,9 +63,9 @@ export async function getApp(apId: string){
 }
 
 export async function Delete(apId: string) {
-    return await internalFetch("DELETE", `apartments/${apId}`)
+    await internalFetch("DELETE", `apartments/${apId}`)
 }
 
 export async function Edit(apData: formAppData, apId: string){
-    return await internalFetch("PUT", `apartments/${apId}`, {...apData, apId})
+    await internalFetch("PUT", `apartments/${apId}`, {...apData, apId})
 }
