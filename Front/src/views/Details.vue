@@ -13,7 +13,6 @@ const apartment: Ref<Apartment | undefined> = ref()
 
 onMounted(async () => {
     apartment.value = await appService.getApp(apId)
-    console.log(apartment.value)
 })
 
 async function Delete(e: Event){
