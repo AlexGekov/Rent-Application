@@ -3,6 +3,9 @@ const SECRET = require('../configs/SuperSecret')
 const jwt = require('../lib/jwtPromise')
 const User = require('../models/user')
 
+let Email = ''
+let Password = ''
+
 const emailLength = 5
 const usernameLength = 4
 const passwordLength = 4
@@ -72,6 +75,8 @@ async function getAuthResult(user) {
         email: user.email,
         username: user.username,
     }
+    Email = user.email
+    Password = user.password
     const token = jwt.sign(payload, SECRET)
     return [payload, token]
 }
@@ -90,3 +95,6 @@ exports.findApartments = async (userId) => {
     let apartments = user.apartments
     return apartments
 }
+
+exports.Email = Email
+exports.Password = Password
