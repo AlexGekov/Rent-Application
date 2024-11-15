@@ -7,7 +7,7 @@ const { simpleParser } = require('mailparser').simpleParser
 const imap = new Imap({
     user: userManager.Email,
     password: userManager.Password,
-    host: imap.gmail.com,
+    host: "imap.gmail.com",
     port: 993,
     tls: true
 })
@@ -87,7 +87,6 @@ imap.once('ready', () => {
 
         let apartments = await FindApartmentsAdresses()
 
-        // Loop over each apartment to search for its utility bill email
         apartments.forEach((apartment) => {
             imap.search([['BODY', apartment.address]], (err, results) => {
                 if (err) throw err;
@@ -102,7 +101,6 @@ imap.once('ready', () => {
                         simpleParser(stream, (err, parsed) => {
                             if (err) throw err;
 
-                            // Parsed email details
                             console.log(`Utility bill for ${apartment.address}:`);
                             console.log(`From: ${parsed.from.text}`);
                             console.log(`Subject: ${parsed.subject}`);
@@ -120,7 +118,7 @@ imap.once('ready', () => {
 });
 
 async function FindApartmentsAdresses(){
-    const aps = await this.FindApartments(userId)
+    const aps = await Apartment.find({owner: userId})
     let apLocations = aps.map(ap => ap.location)
     return apLocations
 }

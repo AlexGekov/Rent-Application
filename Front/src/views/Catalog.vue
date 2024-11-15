@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Apartment } from '../types/app';
 import { onMounted, ref, type Ref } from 'vue';
-import * as appService from "../services/appServive"
-const apartments: Ref<Apartment[] | undefined> = ref()
+import * as apService from "../services/appServive"
+const apartments: Ref<Apartment[] | undefined> = ref(undefined)
 let isEmpty: Ref<boolean> = ref(true)
+let searchQuery: Ref<string> = ref('')
 
 onMounted(async () => {
     try {
-        apartments.value = await appService.getApartments();
+        apartments.value = await apService.getApartments();
         if (apartments.value == undefined) {
             isEmpty.value = false
         }
@@ -16,15 +17,32 @@ onMounted(async () => {
     }
 });
 
+async function Search(){
+    let Query: string = searchQuery.value
+    try{
+        console.log(Query)
+        let resp = await apService.search(Query)
+        apartments.value = resp
+    }catch(err){
+        console.log(err)
+    }
+}
 </script>
 
 <template>
+    <div class="box">
+        <form name="search" @submit.prevent="Search" >
+            <input type="text" class="input" name="txt" placeholder="⌕" @input.prevent ="Search" v-model="searchQuery" onmouseout="this.value = ''; this.blur();">
+        </form>
+        <i class="fa fa-search"></i>
+    </div>
     <div v-if="isEmpty.valueOf()" class="frame">
         <template v-for="apartment in apartments">
             <div class="ap-box">
                 <img :src="apartment.image" />
                 <p>{{ apartment.name }}</p>
-                <router-link :to="{ name: 'Details', params: { id: apartment._id } }"><button class="button-1">Details</button></router-link>
+                <router-link :to="{ name: 'Details', params: { id: apartment._id } }"><button
+                        class="button-1">Details</button></router-link>
             </div>
         </template>
     </div>
@@ -69,51 +87,94 @@ img {
     object-fit: cover;
 }
 
-button{
+button {
     border-radius: 6px;
     border-color: none;
 }
 
 .button-1 {
-  appearance: none;
-  background-color: transparent;
-  border: 2px solid #1A1A1A;
-  border-radius: 15px;
-  box-sizing: border-box;
-  color: #3B3B3B;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: normal;
-  margin: 0;
-  min-height: 40px;
-  min-width: 0;
-  outline: none;
-  padding: 10px 18px;
-  text-align: center;
-  text-decoration: none;
-  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: 85px;
-  will-change: transform;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 40px;
+    min-width: 0;
+    outline: none;
+    padding: 10px 18px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 85px;
+    will-change: transform;
 }
 
 .button-1:disabled {
-  pointer-events: none;
+    pointer-events: none;
 }
 
 .button-1:hover {
-  color: #fff;
-  background-color: #1A1A1A;
-  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-  transform: translateY(-2px);
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
 }
 
 .button-1:active {
-  box-shadow: none;
-  transform: translateY(0);
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.box{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.input {
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: 4px solid #1A1A1A;
+    border-radius: 50px;
+    box-sizing: border-box;
+    font-size: 26px;
+    color: #fff;
+    outline: none;
+    transition: .5s;
+}
+.input:hover{
+    width: 350px;
+    background: #1A1A1A;
+    border-radius: 10px;
+}
+.box i{
+    position: relative;
+    top: 50%;
+    right: 15px;
+    transform: translate(-50%,-50%);
+    font-size: 26px;
+    color: #1A1A1A;
+    transition: .2s;
+}
+.box:hover i{
+    opacity: 0;
+    z-index: -1;
+}
+
+::placeholder {
+    text-align: center; 
 }
 </style>

@@ -69,3 +69,7 @@ export async function Delete(apId: string) {
 export async function Edit(apData: formAppData, apId: string){
     await internalFetch("PUT", `apartments/${apId}`, {...apData, apId})
 }
+
+export async function search(query: string) {
+    await internalFetch("GET", `apartments/${query}`)
+}
