@@ -67,7 +67,8 @@ exports.FindApartments = async (userId) => {
 
 exports.search = async (Param) => {
     let result = await Apartment.find().lean()
-    result = result.filter(post => post.name.toLowerCase().includes(Param.toLowerCase()))
+    result = result.filter(ap => ap.name.toLowerCase().includes(Param.toLowerCase()))
+    console.log(result)
     return result
 }
 

@@ -32,8 +32,8 @@ router.get("/owned", async (req, res) => {
 router.get("/:search", async (req, res) => {
     let search = req.params.search
     try {
-        let posts = await ApManager.search(search)
-        res.json(posts).end()
+        let properties = await ApManager.search(search)
+        res.json(properties).end()
     } catch (err) {
         res.status(404)
     }

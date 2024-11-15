@@ -22,7 +22,7 @@ async function Search(){
     try{
         console.log(Query)
         let resp = await apService.search(Query)
-        apartments.value = resp
+        // apartments.value = resp
     }catch(err){
         console.log(err)
     }
@@ -31,8 +31,8 @@ async function Search(){
 
 <template>
     <div class="box">
-        <form name="search" @submit.prevent="Search" >
-            <input type="text" class="input" name="txt" placeholder="⌕" @input.prevent ="Search" v-model="searchQuery" onmouseout="this.value = ''; this.blur();">
+        <form name="search" >
+            <input type="text" class="input" name="txt" placeholder="⌕" v-debounce:400ms="Search" v-model="searchQuery" onmouseout="this.value = ''; this.blur();">
         </form>
         <i class="fa fa-search"></i>
     </div>
