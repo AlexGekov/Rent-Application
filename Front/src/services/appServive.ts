@@ -71,5 +71,8 @@ export async function Edit(apData: formAppData, apId: string){
 }
 
 export async function search(query: string) {
-    await internalFetch("GET", `apartments/${query}`)
+    let resp = await internalFetch("GET", `apartments/${query}`)
+    let apartments = resp.json()
+    return apartments
+
 }

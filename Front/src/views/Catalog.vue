@@ -2,9 +2,10 @@
 import { Apartment } from '../types/app';
 import { onMounted, ref, type Ref } from 'vue';
 import * as apService from "../services/appServive"
-const apartments: Ref<Apartment[] | undefined> = ref(undefined)
+const apartments: Ref<Apartment[]> = ref([])
 let isEmpty: Ref<boolean> = ref(true)
 let searchQuery: Ref<string> = ref('')
+const search = ref([])
 
 onMounted(async () => {
     try {
@@ -12,27 +13,35 @@ onMounted(async () => {
         if (apartments.value == undefined) {
             isEmpty.value = false
         }
+        console.log(apartments.value)
     } catch (err) {
         console.log(err);
     }
 });
 
-async function Search(){
+async function Search() {
     let Query: string = searchQuery.value
-    try{
-        console.log(Query)
-        let resp = await apService.search(Query)
-        // apartments.value = resp
-    }catch(err){
-        console.log(err)
+    if (Query != "") {
+        try {
+            apartments.value = []
+            apartments.value = await apService.search(Query)
+        } catch (err) {
+            console.log(err)
+        }
+    }else{
+        apartments.value = await apService.getApartments();
+        if (apartments.value == undefined) {
+            isEmpty.value = false
+        }
     }
 }
 </script>
 
 <template>
     <div class="box">
-        <form name="search" >
-            <input type="text" class="input" name="txt" placeholder="⌕" v-debounce:400ms="Search" v-model="searchQuery" onmouseout="this.value = ''; this.blur();">
+        <form name="search">
+            <input type="text" class="input" name="txt" placeholder="⌕" :oninput="Search" v-model="searchQuery"
+                onmouseout="this.value = ''; this.blur();">
         </form>
         <i class="fa fa-search"></i>
     </div>
@@ -135,7 +144,7 @@ button {
     transform: translateY(0);
 }
 
-.box{
+.box {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -155,26 +164,29 @@ button {
     outline: none;
     transition: .5s;
 }
-.input:hover{
+
+.input:hover {
     width: 350px;
     background: #1A1A1A;
     border-radius: 10px;
 }
-.box i{
+
+.box i {
     position: relative;
     top: 50%;
     right: 15px;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     font-size: 26px;
     color: #1A1A1A;
     transition: .2s;
 }
-.box:hover i{
+
+.box:hover i {
     opacity: 0;
     z-index: -1;
 }
 
 ::placeholder {
-    text-align: center; 
+    text-align: center;
 }
 </style>
