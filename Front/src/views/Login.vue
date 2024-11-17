@@ -40,7 +40,7 @@ async function login() {
         </div>
 
         <div class="switch-link">
-            <router-link style="text-decoration: none; color: inherit;" to="/login">Don't have an account?</router-link>
+            <router-link style="text-decoration: none; color: inherit;" to="/register">Don't have an account?</router-link>
         </div>
     </form>
     </section>
