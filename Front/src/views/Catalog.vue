@@ -12,7 +12,6 @@ onMounted(async () => {
         if (apartments.value.length > 0) {
             isEmpty.value = false
         }
-        console.log(isEmpty.value)
     } catch (err) {
         console.log(err);
     }
