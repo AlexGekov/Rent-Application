@@ -5,15 +5,14 @@ import * as apService from "../services/appServive"
 const apartments: Ref<Apartment[]> = ref([])
 let isEmpty: Ref<boolean> = ref(true)
 let searchQuery: Ref<string> = ref('')
-const search = ref([])
 
 onMounted(async () => {
     try {
         apartments.value = await apService.getApartments();
-        if (apartments.value == undefined) {
+        if (apartments.value.length > 0) {
             isEmpty.value = false
         }
-        console.log(apartments.value)
+        console.log(isEmpty.value)
     } catch (err) {
         console.log(err);
     }
@@ -24,13 +23,18 @@ async function Search() {
     if (Query != "") {
         try {
             apartments.value = []
+            isEmpty.value = true
             apartments.value = await apService.search(Query)
+            if (apartments.value.length > 0) {
+                isEmpty.value = false
+            }
+            console.log(isEmpty.value)
         } catch (err) {
             console.log(err)
         }
-    }else{
+    } else {
         apartments.value = await apService.getApartments();
-        if (apartments.value == undefined) {
+        if (apartments.value.length > 0) {
             isEmpty.value = false
         }
     }
@@ -45,7 +49,7 @@ async function Search() {
         </form>
         <i class="fa fa-search"></i>
     </div>
-    <div v-if="isEmpty.valueOf()" class="frame">
+    <div v-if="!isEmpty.valueOf()" class="frame">
         <template v-for="apartment in apartments">
             <div class="ap-box">
                 <img :src="apartment.image" />
@@ -56,7 +60,7 @@ async function Search() {
         </template>
     </div>
 
-    <div v-if="!isEmpty.valueOf()" class="empty">
+    <div v-if="isEmpty.valueOf()" class="empty">
         <h1>Add apartments!</h1>
     </div>
 </template>
