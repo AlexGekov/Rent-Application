@@ -1,16 +1,16 @@
 const Apartment = require('../models/apartment')
 const userManager = require('./UserManager')
 
-const Imap = require('node-imap')
-const { simpleParser } = require('mailparser').simpleParser
+// const Imap = require('node-imap')
+// const { simpleParser } = require('mailparser').simpleParser
 
-const imap = new Imap({
-    user: userManager.Email,
-    password: userManager.Password,
-    host: "imap.gmail.com",
-    port: 993,
-    tls: true
-})
+// const imap = new Imap({
+//     user: userManager.Email,
+//     password: userManager.Password,
+//     host: "imap.gmail.com",
+//     port: 993,
+//     tls: true
+// })
 
 let userId = ''
 
@@ -82,57 +82,57 @@ exports.Delete = async (userId, apId) => {
 
 exports.Edit = (Id, Data) => Apartment.findByIdAndUpdate(Id, Data)
 
-imap.once('ready', () => {
-    openInbox( async (err, box) => {
-        if (err) throw err;
+// imap.once('ready', () => {
+//     openInbox( async (err, box) => {
+//         if (err) throw err;
 
-        let apartments = await FindApartmentsAdresses()
+//         let apartments = await FindApartmentsAdresses()
 
-        apartments.forEach((apartment) => {
-            imap.search([['BODY', apartment.address]], (err, results) => {
-                if (err) throw err;
-                if (results.length === 0) {
-                    console.log(`No utility bill found for ${apartment.address}`);
-                    return;
-                }
+//         apartments.forEach((apartment) => {
+//             imap.search([['BODY', apartment.address]], (err, results) => {
+//                 if (err) throw err;
+//                 if (results.length === 0) {
+//                     console.log(`No utility bill found for ${apartment.address}`);
+//                     return;
+//                 }
 
-                const f = imap.fetch(results, { bodies: '' });
-                f.on('message', (msg, seqno) => {
-                    msg.on('body', (stream) => {
-                        simpleParser(stream, (err, parsed) => {
-                            if (err) throw err;
+//                 const f = imap.fetch(results, { bodies: '' });
+//                 f.on('message', (msg, seqno) => {
+//                     msg.on('body', (stream) => {
+//                         simpleParser(stream, (err, parsed) => {
+//                             if (err) throw err;
 
-                            console.log(`Utility bill for ${apartment.address}:`);
-                            console.log(`From: ${parsed.from.text}`);
-                            console.log(`Subject: ${parsed.subject}`);
-                            console.log(`Body: ${parsed.text}`);
-                        });
-                    });
-                });
+//                             console.log(`Utility bill for ${apartment.address}:`);
+//                             console.log(`From: ${parsed.from.text}`);
+//                             console.log(`Subject: ${parsed.subject}`);
+//                             console.log(`Body: ${parsed.text}`);
+//                         });
+//                     });
+//                 });
 
-                f.once('error', (err) => {
-                    console.log(`Fetch error: ${err}`);
-                });
-            });
-        });
-    });
-});
+//                 f.once('error', (err) => {
+//                     console.log(`Fetch error: ${err}`);
+//                 });
+//             });
+//         });
+//     });
+// });
 
-async function FindApartmentsAdresses(){
-    const aps = await Apartment.find({owner: userId})
-    let apLocations = aps.map(ap => ap.location)
-    return apLocations
-}
+// async function FindApartmentsAdresses(){
+//     const aps = await Apartment.find({owner: userId})
+//     let apLocations = aps.map(ap => ap.location)
+//     return apLocations
+// }
 
 
-imap.once('error', (err) => {
-    console.log(err);
-});
+// imap.once('error', (err) => {
+//     console.log(err);
+// });
 
-imap.once('end', () => {
-    console.log('Connection ended');
-});
+// imap.once('end', () => {
+//     console.log('Connection ended');
+// });
 
-function openInbox(callback) {
-    imap.openBox('INBOX', true, callback);
-}
+// function openInbox(callback) {
+//     imap.openBox('INBOX', true, callback);
+// }
