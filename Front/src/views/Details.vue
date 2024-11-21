@@ -46,6 +46,7 @@ async function Delete(e: Event){
                 <p>Water: loading...</p>
             </div>
         </div>
+        <!-- Each property location has to have its own location which must be fetched from Google cloud console (can't do it cuz i'm a poor student T_T) -->
         <div class="btn-box">
             <router-link :to="{name: 'EditApartment', params:{id: `${apartment?._id}`}}" class="button-1">Edit</router-link>
             <button class="button-1" @click="Delete">Delete</button>
