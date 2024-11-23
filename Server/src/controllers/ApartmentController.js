@@ -29,7 +29,7 @@ router.get("/owned", async (req, res) => {
     }
 })
 
-router.get("/:search", async (req, res) => {
+router.get("/search/:search", async (req, res) => {
     let search = req.params.search
     try {
         let properties = await ApManager.search(search)
@@ -41,16 +41,18 @@ router.get("/:search", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     let apId = req.params.id
+    console.log("getting info")
     try {
         let apartment = await ApManager.Find(apId)
         console.log(apartment)
         res.json(apartment)
     } catch (err) {
-        res.status(400)
+        res.status(400).json(err.message)
     }
 })
 
 router.delete("/:id", async (req, res) => {
+    console.log("Deleting...")
     let userId = req.cookies.userId
     let apId = req.params.id
     await ApManager.Delete(userId, apId)
