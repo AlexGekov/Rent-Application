@@ -51,7 +51,7 @@ async function Delete(e: Event){
             <button class="button-1" @click="Delete">Delete</button>
         </div>
         <!-- Each property details page has to have its own location which must be fetched from Google cloud console (can't do it cuz i'm a poor student T_T) -->
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.902565361776!2d23.313946775490987!3d42.68460621453685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa851020e92bf9%3A0x15186325077796df!2z0KHQvtGE0LjRjyDRhtC10L3RgtGK0YAsINCx0YPQuy4g4oCe0JLQuNGC0L7RiNCw4oCcIDc5LCAxNDYzINCh0L7RhNC40Y8!5e0!3m2!1sbg!2sbg!4v1732219413200!5m2!1sbg!2sbg" width="400" height="300" style="border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2932.902565361776!2d23.313946775490987!3d42.68460621453685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa851020e92bf9%3A0x15186325077796df!2z0KHQvtGE0LjRjyDRhtC10L3RgtGK0YAsINCx0YPQuy4g4oCe0JLQuNGC0L7RiNCw4oCcIDc5LCAxNDYzINCh0L7RhNC40Y8!5e0!3m2!1sbg!2sbg!4v1732219413200!5m2!1sbg!2sbg" width="400" height="300" style=" padding-top: 10px; padding-bottom: 10px; border:0;"  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 </template>
 
@@ -74,7 +74,7 @@ async function Delete(e: Event){
 }
 
 .btn-box{
-    width: 60%;
+    width: 40%;
     display: flex;
     justify-content: space-evenly;
 }
@@ -131,5 +131,6 @@ img {
     width: 650px;
     height: auto;
     object-fit: cover;
+    border-radius: 5px;
 }
 </style>

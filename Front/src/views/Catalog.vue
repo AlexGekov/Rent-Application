@@ -82,6 +82,7 @@ async function Search() {
     flex-direction: column;
     width: 300px;
     height: 400px;
+    border: 1px solid #666;
     border-radius: 5px;
     box-shadow: 5px 5px #666;
     margin: 60px;

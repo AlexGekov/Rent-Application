@@ -8,11 +8,13 @@ const username: Ref<string> = ref('')
 
 onMounted( async () => {
   user.value = await userService.getUser()
+  console.log(username.value)
   username.value = user?.value[0].username
 })
 
 function logout(e: Event){
   e.preventDefault()
+  username.value = ''
   userService.logoutUser()
   router.push("/")
 }
@@ -27,7 +29,7 @@ function logout(e: Event){
         <router-link class="action" to="/register">Register</router-link>
       </template>
       <template v-if="userService.isLoggedIn.value">
-        <a>Hello, {{username.valueOf()}}</a>
+        <a>Hello, {{userService.username}}</a>
         <router-link class="action" to="create">Add an apartment</router-link>
         <router-link class="action" to="" @click="logout($event)" >Logout</router-link>
       </template>

@@ -100,6 +100,5 @@ export async function login(userData: formUserData) {
 export function logoutUser() {
     isLoggedIn.value = false
     userId.value = ''
-
     return internalFetch('POST', 'users/logout', undefined)
 }
